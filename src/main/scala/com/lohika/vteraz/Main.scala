@@ -1,6 +1,8 @@
 package com.lohika.vteraz
 
-import com.lohika.vteraz.CrimeService.CrimeDto
+import com.lohika.vteraz.service.CrimeService.CrimeDto
+import com.lohika.vteraz.data.{CsvReader, CsvReaderImpl}
+import com.lohika.vteraz.service.CrimeService
 
 object Main {
   def main(args: Array[String]): Unit = {

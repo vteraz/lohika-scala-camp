@@ -1,5 +1,6 @@
 package com.lohika.vteraz
 
+import com.lohika.vteraz.data.{CsvReader, CsvReaderImpl}
 import org.scalatest._
 
 class CsvReaderImplTest extends FunSuite with DiagrammedAssertions {
