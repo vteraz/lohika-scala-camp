@@ -9,6 +9,6 @@ class CsvReaderImplTest extends FunSuite with DiagrammedAssertions {
     val fileReader: CsvReader = new CsvReaderImpl(testFilePath)
     val fileContent: List[String] = fileReader.readFile()
 
-    assert(fileContent.size.equals(5))
+    assert(fileContent.size.equals(760))
   }
 }

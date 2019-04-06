@@ -6,6 +6,13 @@ import scala.io.Source
 class CsvReaderImpl(filePath: String) extends CsvReader {
 
   override def readFile(): List[String] = {
-    Source.fromFile(filePath).getLines().drop(1).toList
+    try {
+      Source.fromFile(filePath).getLines().drop(1).toList
+    } catch {
+      case e: Exception => {
+        Console.err.println("Failed to read file: " + e.getMessage)
+        sys.exit(1)
+      }
+    }
   }
 }
