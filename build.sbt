@@ -14,5 +14,6 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5" % "test"
 libraryDependencies +=  "org.scalaj" %% "scalaj-http" % "2.4.1"
 libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.9.2"
 libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3"
+libraryDependencies += "org.scalamock" %% "scalamock" % "4.1.0" % Test
 
 enablePlugins(JavaAppPackaging)
