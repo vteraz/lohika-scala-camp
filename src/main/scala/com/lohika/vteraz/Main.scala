@@ -1,6 +1,5 @@
 package com.lohika.vteraz
 
-import com.lohika.vteraz.Main.FailedToPerformActionException
 import com.typesafe.scalalogging.LazyLogging
 import scalaj.http.{Http, HttpResponse}
 
@@ -75,6 +74,7 @@ object Main extends LazyLogging {
                    acceptResults: A => Boolean,
                    retries: List[FiniteDuration]): A = {
     retries match {
+      case Nil => throw new FailedToPerformActionException() // this should never be happened
       case x :: tail =>
         logger.info(s"Sleeping $x and performing action")
         Thread.sleep(x.toMillis)
