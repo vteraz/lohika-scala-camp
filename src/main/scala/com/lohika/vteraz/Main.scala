@@ -1,6 +1,8 @@
 package com.lohika.vteraz
 
 import scala.annotation.tailrec
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 
 object Main {
@@ -27,5 +29,21 @@ object Main {
             Thread.sleep(retries.head.toMillis)
             retry(action, acceptResults, retries.tail)
         }
+    }
+
+    def retryAsync[A](action: () => Future[A],
+                      acceptResults: A => Boolean,
+                      retries: List[FiniteDuration]): Future[A] = {
+        action.apply().flatMap(actionResult => {
+            if (acceptResults.apply(actionResult) || retries.isEmpty) {
+                println(s"Stop retrying with value - $actionResult")
+                Future(actionResult)
+            }
+            else {
+                println(s"Value $actionResult is invalid. Running action one more time")
+                Thread.sleep(retries.head.toMillis)
+                retryAsync(action, acceptResults, retries.tail)
+            }
+        })
     }
 }
