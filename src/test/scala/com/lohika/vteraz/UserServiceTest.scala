@@ -1,12 +1,13 @@
 package com.lohika.vteraz
 
 import cats.Id
-import com.lohika.vteraz.generic.{InMemoryUserRepository, UserService}
+import com.lohika.vteraz.repository.IdInMemoryUserRepository
+import com.lohika.vteraz.service.UserService
 import org.scalatest.FunSuite
 
 class UserServiceTest extends FunSuite {
     test("Test successfully register new user") {
-        val userService = new UserService[Id](new InMemoryUserRepository)
+        val userService = new UserService[Id](new IdInMemoryUserRepository)
 
         val newUser = userService.registerUser("John")
         assert(newUser.isRight)
@@ -15,7 +16,7 @@ class UserServiceTest extends FunSuite {
     }
 
     test("Test user already exists") {
-        val userService = new UserService[Id](new InMemoryUserRepository)
+        val userService = new UserService[Id](new IdInMemoryUserRepository)
 
         userService.registerUser("John")
         val newUser = userService.registerUser("John")
@@ -24,7 +25,7 @@ class UserServiceTest extends FunSuite {
     }
 
     test("Test get user by name") {
-        val userService = new UserService[Id](new InMemoryUserRepository)
+        val userService = new UserService[Id](new IdInMemoryUserRepository)
 
         userService.registerUser("John")
 
@@ -33,7 +34,7 @@ class UserServiceTest extends FunSuite {
     }
 
     test("Test get user by id") {
-        val userService = new UserService[Id](new InMemoryUserRepository)
+        val userService = new UserService[Id](new IdInMemoryUserRepository)
 
         var u = userService.registerUser("John")
 

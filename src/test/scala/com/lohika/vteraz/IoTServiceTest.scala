@@ -1,14 +1,15 @@
 package com.lohika.vteraz
 
 import cats.Id
-import com.lohika.vteraz.generic.{InMemoryIotDeviceRepository, InMemoryUserRepository, IotDeviceService, UserService}
+import com.lohika.vteraz.repository.{IdInMemoryIotDeviceRepository, IdInMemoryUserRepository}
+import com.lohika.vteraz.service.{IotDeviceService, UserService}
 import org.scalatest.FunSuite
 
 class IoTServiceTest extends FunSuite {
     test("register device successfully") {
-        val userRepo = new InMemoryUserRepository
+        val userRepo = new IdInMemoryUserRepository
         new UserService[Id](userRepo)
-        val iotService = new IotDeviceService[Id](new InMemoryIotDeviceRepository, userRepo)
+        val iotService = new IotDeviceService[Id](new IdInMemoryIotDeviceRepository, userRepo)
         userRepo.registerUser("Tom")
         val result = iotService.registerDevice(1, "11")
 
@@ -17,9 +18,9 @@ class IoTServiceTest extends FunSuite {
     }
 
     test("register device - user not exists") {
-        val userRepo = new InMemoryUserRepository
+        val userRepo = new IdInMemoryUserRepository
         new UserService[Id](userRepo)
-        val iotService = new IotDeviceService[Id](new InMemoryIotDeviceRepository, userRepo)
+        val iotService = new IotDeviceService[Id](new IdInMemoryIotDeviceRepository, userRepo)
         val result = iotService.registerDevice(1, "11")
 
         assert(result.isLeft)
@@ -27,9 +28,9 @@ class IoTServiceTest extends FunSuite {
     }
 
     test("register device - sn already exists") {
-        val userRepo = new InMemoryUserRepository
+        val userRepo = new IdInMemoryUserRepository
         new UserService[Id](userRepo)
-        val iotService = new IotDeviceService[Id](new InMemoryIotDeviceRepository, userRepo)
+        val iotService = new IotDeviceService[Id](new IdInMemoryIotDeviceRepository, userRepo)
         userRepo.registerUser("Tom")
         iotService.registerDevice(1, "11")
         val result = iotService.registerDevice(1, "11")
