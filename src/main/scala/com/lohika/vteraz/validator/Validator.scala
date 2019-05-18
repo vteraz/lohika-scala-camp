@@ -76,6 +76,16 @@ object Validator {
         else Left(s"Specified string is empty")
     }
 
+    val alphanumericOnly: Validator[String] = (t: String) => {
+        if (t.matches("^[a-zA-Z0-9]*$")) Right(t)
+        else Left("Invalid email address")
+    }
+
+    val wellFormattedEmail: Validator[String] = (t: String) => {
+        if (t.toUpperCase.matches("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$")) Right(t)
+        else Left(s"String should contain only alphanumeric characters")
+    }
+
     val isPersonValid: Validator[Person] = new Validator[Person] {
         // Returns valid only when the name is not empty and age is in range [1-99].
         override def validate(value: Person): Either[String, Person] = {
