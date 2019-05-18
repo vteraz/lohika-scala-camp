@@ -6,7 +6,10 @@ import akka.actor.ActorSystem
 import akka.dispatch.ExecutionContexts
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
+import cats.implicits._
+import com.lohika.vteraz.repository.FutureInMemoryUserRepository
 import com.lohika.vteraz.route.UserRoute
+import com.lohika.vteraz.service.UserService
 
 import scala.annotation.tailrec
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -20,7 +23,11 @@ object Main {
     implicit val materializer: ActorMaterializer = ActorMaterializer()
     implicit val executionContext: ExecutionContextExecutor = ExecutionContexts.fromExecutor(Executors.newCachedThreadPool())
 
-    Http().bindAndHandle(UserRoute.routes, "localhost", 8080)
+
+    val service = new UserService[Future](new FutureInMemoryUserRepository)
+    val userRoute = new UserRoute(service)
+
+    Http().bindAndHandle(userRoute.routes, "localhost", 8080)
 
 
     //        val db = Database.forURL("jdbc:h2:mem:hello", driver = "org.h2.Driver", keepAliveConnection = true)

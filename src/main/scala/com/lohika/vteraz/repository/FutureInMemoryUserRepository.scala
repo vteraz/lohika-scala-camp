@@ -2,6 +2,8 @@ package com.lohika.vteraz.repository
 
 import java.util.concurrent.atomic.AtomicLong
 
+import com.lohika.vteraz.Model.User
+
 import scala.concurrent.Future
 
 class FutureInMemoryUserRepository extends UserRepository[Future] {
@@ -11,7 +13,7 @@ class FutureInMemoryUserRepository extends UserRepository[Future] {
     override def registerUser(username: String): Future[User] = {
         Future.successful {
             val id = idGenerator.incrementAndGet()
-            val user = User(id, username)
+            val user = User(id, username, None, "")
             println(storage)
             storage.put(id, user)
             user

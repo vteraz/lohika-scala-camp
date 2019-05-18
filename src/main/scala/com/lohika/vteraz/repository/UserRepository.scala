@@ -1,6 +1,6 @@
 package com.lohika.vteraz.repository
 
-case class User(id: Long, username: String)
+import com.lohika.vteraz.Model.User
 
 trait UserRepository[F[_]] {
     def registerUser(username: String): F[User]

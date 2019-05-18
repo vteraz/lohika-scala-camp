@@ -2,7 +2,8 @@ package com.lohika.vteraz.service
 
 import cats.Monad
 import cats.implicits._
-import com.lohika.vteraz.repository.{IotDeviceRepository, User, UserRepository}
+import com.lohika.vteraz.Model.User
+import com.lohika.vteraz.repository.{IotDeviceRepository, UserRepository}
 
 class IotDeviceService[F[_]](repository: IotDeviceRepository[F],
                              userRepository: UserRepository[F])

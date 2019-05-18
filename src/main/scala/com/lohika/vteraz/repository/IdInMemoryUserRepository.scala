@@ -3,6 +3,7 @@ package com.lohika.vteraz.repository
 import java.util.concurrent.atomic.AtomicLong
 
 import cats.Id
+import com.lohika.vteraz.Model.User
 
 class IdInMemoryUserRepository extends UserRepository[Id] {
     private val storage = scala.collection.mutable.Map[Long, User]()
@@ -10,7 +11,7 @@ class IdInMemoryUserRepository extends UserRepository[Id] {
 
     override def registerUser(username: String): Id[User] = {
         val id = idGenerator.incrementAndGet()
-        val user = User(id, username)
+        val user = User(id, username, None, "")
         storage.put(id, user)
         user
     }
