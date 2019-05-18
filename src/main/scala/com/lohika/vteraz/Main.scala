@@ -1,16 +1,42 @@
 package com.lohika.vteraz
 
+import com.lohika.vteraz.repository.entity.UserTable
+import slick.jdbc.H2Profile.api._
+import slick.lifted.OptionMapper2
+
 import scala.annotation.tailrec
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 import scala.concurrent.duration._
 
 object Main {
 
     def main(args: Array[String]): Unit = {
-        val result = retry[Double](() => math.random(), res => res < 0.1, List(1.seconds, 2.seconds, 3.seconds))
-        println(result)
+        val db = Database.forURL("jdbc:h2:mem:hello", driver = "org.h2.Driver", keepAliveConnection = true)
+
+        val users = TableQuery[UserTable]
+
+        class Coffees(tag: Tag) extends Table[(String, Double)](tag, "COFFEES") {
+            def name = column[String]("COF_NAME")
+            def price = column[Double]("PRICE")
+            def * = (name, price)
+        }
+        val coffees = TableQuery[Coffees]
+
+        val q = users.filter(_.id > 8).map(_.name)
+
+        val setup = DBIO.seq(
+            users.schema.create,
+            users += (1, "Tom"),
+            users += (2, "Jerry")
+        )
+
+        val setupFuture = db.run(setup)
+
+
+        Thread.sleep(20000)
     }
+
 
     /**
       * Performs action specified amount of times and try to get suitable result.
