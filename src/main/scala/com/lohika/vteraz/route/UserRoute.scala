@@ -4,7 +4,7 @@ import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import akka.http.scaladsl.model.{HttpEntity, HttpResponse, StatusCodes}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import com.lohika.vteraz.Model.CreateUserRequest
+import com.lohika.vteraz.model.CreateUserRequest
 import com.lohika.vteraz.service.UserService
 
 import scala.concurrent.Future

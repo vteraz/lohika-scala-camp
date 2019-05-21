@@ -1,7 +1,6 @@
 package com.lohika.vteraz.route
 
-import com.lohika.vteraz.Model.CreateUserRequest
-import com.lohika.vteraz.model.UserModel
+import com.lohika.vteraz.model.{CreateUserRequest, UserModel}
 import spray.json.DefaultJsonProtocol._
 
 trait JsonSupport {

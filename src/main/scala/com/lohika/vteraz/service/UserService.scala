@@ -2,9 +2,8 @@ package com.lohika.vteraz.service
 
 import cats.Monad
 import cats.implicits._
-import com.lohika.vteraz.Model.CreateUserRequest
-import com.lohika.vteraz.model.UserModel
-import com.lohika.vteraz.repository.UserRepository
+import com.lohika.vteraz.model.{CreateUserRequest, UserModel}
+import com.lohika.vteraz.persistence.repository.UserRepository
 
 class UserService[F[_]](repository: UserRepository[F])(implicit monad: Monad[F]) {
 

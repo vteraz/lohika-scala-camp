@@ -7,7 +7,8 @@ import akka.dispatch.ExecutionContexts
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import cats.implicits._
-import com.lohika.vteraz.repository.{DataSource, SlickH2UserRepository}
+import com.lohika.vteraz.persistence.DataSource
+import com.lohika.vteraz.persistence.repository.SlickH2UserRepository
 import com.lohika.vteraz.route.UserRoute
 import com.lohika.vteraz.service.UserService
 
