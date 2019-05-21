@@ -15,10 +15,10 @@ class UserRoute(userService: UserService[Future]) extends JsonSupport {
     pathPrefix("user") {
       post {
         entity(as[CreateUserRequest]) { user =>
-          onSuccess(userService.registerUser(user.username)) { result =>
+          onSuccess(userService.registerUser(user)) { result =>
             complete(result.fold(
               errorMessage => HttpResponse(StatusCodes.BadRequest, entity = HttpEntity(errorMessage)),
-              registeredUser => registeredUser))
+              id => s"${id.intValue}"))
           }
         }
       } ~ get {

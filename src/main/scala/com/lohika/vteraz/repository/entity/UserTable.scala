@@ -1,13 +1,13 @@
 package com.lohika.vteraz.repository.entity
 
-import com.lohika.vteraz.Model.User
+import com.lohika.vteraz.model.UserModel
 import slick.jdbc.H2Profile.api._
 
-class UserTable(tag: Tag) extends Table[User](tag, "user") {
+class UserTable(tag: Tag) extends Table[UserModel](tag, "user") {
   def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
   def username = column[String]("name")
   def address = column[Option[String]]("address")
   def email = column[String]("email")
 
-  def * = (id, username, address, email).mapTo[User]
+  def * = (id, username, address, email).mapTo[UserModel]
 }

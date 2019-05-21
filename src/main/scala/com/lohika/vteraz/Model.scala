@@ -4,8 +4,6 @@ import com.lohika.vteraz.validator.Validator.{alphanumericOnly, nonEmpty, wellFo
 
 object Model {
 
-  case class User(id: Long, username: String, address: Option[String], email: String)
-
   case class CreateUserRequest(username: String, address: Option[String], email: String) {
     require(nonEmpty.and(alphanumericOnly).validate(username).isRight,
       "username must not be empty AND contain only alphanumeric characters")

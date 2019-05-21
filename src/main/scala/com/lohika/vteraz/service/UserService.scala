@@ -2,17 +2,18 @@ package com.lohika.vteraz.service
 
 import cats.Monad
 import cats.implicits._
-import com.lohika.vteraz.Model.User
+import com.lohika.vteraz.Model.CreateUserRequest
+import com.lohika.vteraz.model.UserModel
 import com.lohika.vteraz.repository.UserRepository
 
 class UserService[F[_]](repository: UserRepository[F])(implicit monad: Monad[F]) {
 
-  def registerUser(username: String): F[Either[String, User]] = {
-    repository.getByUsername(username).flatMap({
-      case Some(user) =>
-        monad.pure(Left(s"User ${user.username} already exists"))
+  def registerUser(user: CreateUserRequest): F[Either[String, Long]] = {
+    repository.getByUsername(user.username).flatMap({
+      case Some(u) =>
+        monad.pure(Left(s"User ${u.username} already exists"))
       case None =>
-        repository.registerUser(username).map(Right(_))
+        repository.registerUser(UserModel(1, user.username, user.address, user.email)).map(Right(_))
     })
   }
 
@@ -25,7 +26,7 @@ class UserService[F[_]](repository: UserRepository[F])(implicit monad: Monad[F])
     })
   }
 
-  def getById(id: Long): F[Option[User]] = {
+  def getById(id: Long): F[Option[UserModel]] = {
     repository.getById(id).flatMap({
       case Some(user) =>
         monad.pure(Option(user))

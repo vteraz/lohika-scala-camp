@@ -1,11 +1,11 @@
 package com.lohika.vteraz.repository
 
-import com.lohika.vteraz.Model.User
+import com.lohika.vteraz.model.UserModel
 
 trait UserRepository[F[_]] {
-    def registerUser(username: String): F[User]
+  def registerUser(user: UserModel): F[Long]
 
-    def getById(id: Long): F[Option[User]]
+  def getById(id: Long): F[Option[UserModel]]
 
-    def getByUsername(username: String): F[Option[User]]
+  def getByUsername(username: String): F[Option[UserModel]]
 }

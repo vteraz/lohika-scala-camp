@@ -7,7 +7,7 @@ import akka.dispatch.ExecutionContexts
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import cats.implicits._
-import com.lohika.vteraz.repository.{DataSource, FutureInMemoryUserRepository, SlickH2UserRepository}
+import com.lohika.vteraz.repository.{DataSource, SlickH2UserRepository}
 import com.lohika.vteraz.route.UserRoute
 import com.lohika.vteraz.service.UserService
 
@@ -25,11 +25,10 @@ object Main {
 
     DataSource.init()
 
-    val service = new UserService[Future](new SlickH2UserRepository())
+    val service = new UserService[Future](new SlickH2UserRepository(DataSource.db))
     val userRoute = new UserRoute(service)
 
     Http().bindAndHandle(userRoute.routes, "localhost", 8080)
-
   }
 
 
