@@ -7,7 +7,7 @@ import akka.dispatch.ExecutionContexts
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import cats.implicits._
-import com.lohika.vteraz.repository.FutureInMemoryUserRepository
+import com.lohika.vteraz.repository.{DataSource, FutureInMemoryUserRepository, SlickH2UserRepository}
 import com.lohika.vteraz.route.UserRoute
 import com.lohika.vteraz.service.UserService
 
@@ -23,38 +23,14 @@ object Main {
     implicit val materializer: ActorMaterializer = ActorMaterializer()
     implicit val executionContext: ExecutionContextExecutor = ExecutionContexts.fromExecutor(Executors.newCachedThreadPool())
 
+    DataSource.init()
 
-    val service = new UserService[Future](new FutureInMemoryUserRepository)
+    val service = new UserService[Future](new SlickH2UserRepository())
     val userRoute = new UserRoute(service)
 
     Http().bindAndHandle(userRoute.routes, "localhost", 8080)
 
-
-    //        val db = Database.forURL("jdbc:h2:mem:hello", driver = "org.h2.Driver", keepAliveConnection = true)
-    //        val users = TableQuery[UserTable]
-    //
-    //        implicit val userJsonFormat = jsonFormat2(User)
-    //
-    //        def fetchItem(itemId: Long): Future[Option[User]] = Future {
-    //          println("DB query in " + Thread.currentThread().getName)
-    //          Thread.sleep(1000)
-    //
-    //            Option(User(itemId, "Vasyl"))
   }
-
-  //        val route =
-  //            path("hello") {
-  //                get {
-  //                      val maybeUser = fetchItem(1)
-  //                      onSuccess(maybeUser) {
-  //                          case Some(user) => complete(user)
-  //                          case None => complete(StatusCodes.NotFound)
-  //                      }
-  //
-  //                }
-  //            }
-  //
-  //    }
 
 
   /**
