@@ -15,17 +15,17 @@ object ErrorHandlingSupport extends LazyLogging {
 
   implicit def getExceptionHandler: ExceptionHandler =
     ExceptionHandler {
-      case a: DbException =>
-        complete(HttpResponse(InternalServerError, entity = s"DbException: ${a.getMessage}"))
+      case dbException: DbException =>
+        complete(InternalServerError.intValue, ErrorResponseModel(InternalServerError.intValue, "DB_EXCEPTION", dbException.getMessage))
       case a: Exception =>
-        complete(HttpResponse(InternalServerError, entity = a.getMessage))
+        complete(InternalServerError.intValue, ErrorResponseModel(InternalServerError.intValue, "GENERAL_EXCEPTION", a.getMessage))
     }
 
   implicit def getRejectionHandler =
 
     RejectionHandler.newBuilder()
       .handle { case MalformedRequestContentRejection(message, _) =>
-        complete(400, ErrorResponseModel(400, "BAD_REQUEST", message))
+        complete(400, ErrorResponseModel(StatusCodes.BadRequest.intValue, "BAD_REQUEST", message))
       }
       .result()
 
