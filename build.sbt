@@ -11,7 +11,16 @@ resolvers ++= Seq(
 )
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5" % "test"
-libraryDependencies += "org.scalamock" %% "scalamock" % "4.1.0" % Test
+libraryDependencies += "org.scalamock" %% "scalamock" % "4.1.0" % "test"
 libraryDependencies += "org.typelevel" %% "cats-core" % "1.6.0"
+libraryDependencies += "com.typesafe.scala-logging" %% "scala-logging" % "3.9.2"
+libraryDependencies += "com.typesafe.slick" %% "slick" % "3.3.0"
+libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.1.2"
+libraryDependencies += "com.typesafe.akka" %% "akka-http"   % "10.1.8"
+libraryDependencies += "com.typesafe.akka" %% "akka-stream" % "2.5.19"
+libraryDependencies += "com.typesafe.akka" %% "akka-http-spray-json" % "10.1.8"
+libraryDependencies += "com.h2database" % "h2" % "1.4.199"
+libraryDependencies += "com.typesafe.akka" %% "akka-stream-testkit" % "2.5.19"
+libraryDependencies += "com.typesafe.akka" %% "akka-http-testkit" % "10.1.8"
 
 enablePlugins(JavaAppPackaging)

@@ -5,7 +5,7 @@ import scala.concurrent.Future
 import scala.concurrent.duration.FiniteDuration
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class RetryService {
+object RetryService {
 
   /**
     * Performs action specified amount of times and try to get suitable result.
